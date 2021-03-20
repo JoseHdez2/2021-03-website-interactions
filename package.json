@@ -1,11 +1,8 @@
 {
-  "name": "react",
+  "name": "2020-03-website-interactions",
   "version": "1.0.0",
-  "description": "React example starter project",
-  "keywords": [
-    "react",
-    "starter"
-  ],
+  "description": "",
+  "keywords": [],
   "main": "src/index.js",
   "dependencies": {
     "@babel/runtime": "7.13.8",
