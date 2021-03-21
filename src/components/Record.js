@@ -1,45 +1,34 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { Badge, Tooltip, OverlayTrigger, ListGroup } from "react-bootstrap";
 
-const dataUrl = "https://api.jsonbin.io/b/605512787ffeba41c07e34c2";
+export const RecordList = ({ data }) => (
+  <ListGroup>
+    {data?.records?.map((r) => (
+      <Record record={r} />
+    ))}
+  </ListGroup>
+);
 
-const loadData = (url) =>
-  fetch("https://api.jsonbin.io/b/605512787ffeba41c07e34c2").then((response) =>
-    response.json()
-  );
+export const Record = ({ record }) => (
+  <span key={record.time}>
+    <Badge variant="secondary">{record.id || ""}</Badge>
+    <RecordDate date={new Date(record.time)} />{" "}
+    <Badge variant="primary">{record.event.type}</Badge>
+    <OverlayTrigger
+      key={`${record.time}-overlay`}
+      overlay={<Tooltip id={`tooltip`}>{JSON.stringify(record)}</Tooltip>}
+    >
+      <span>...</span>
+    </OverlayTrigger>
+  </span>
+);
 
-export const RecordList = () => {
-  const [req, setReq] = useState(loadData(dataUrl));
-
-  const [isLoaded, setLoaded] = useState(false);
-  const [data, setData] = useState({});
-
-  useEffect(() => {
-    async function loadDataAsync() {
-      try {
-        let data = await loadData();
-        console.log(data);
-        setData(data);
-      } catch (e) {
-        console.warn(e);
-      } finally {
-        setLoaded(true);
-      }
-    }
-
-    loadDataAsync();
-  }, []);
-
-  return (
-    <div>
-      {
-        <ul>
-          {data?.records?.map((r) => (
-            <Record record={r} />
-          ))}
-        </ul>
-      }
-    </div>
-  );
-};
-
-export const Record = ({ record }) => <li>{JSON.stringify(record)}</li>;
+export const RecordDate = ({ date }) => (
+  <span>
+    <OverlayTrigger
+      key={`${date.toLocaleTimeString()}-overlay`}
+      overlay={<Tooltip id={`tooltip`}>{date.toISOString()}</Tooltip>}
+    >
+      <small>{date.toLocaleTimeString()}</small>
+    </OverlayTrigger>
+  </span>
+);
