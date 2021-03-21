@@ -1,4 +1,10 @@
-import { Badge, Tooltip, OverlayTrigger, ListGroup } from "react-bootstrap";
+import {
+  Badge,
+  Button,
+  Tooltip,
+  OverlayTrigger,
+  ListGroup
+} from "react-bootstrap";
 
 export const RecordList = ({ data }) => (
   <ListGroup>
@@ -8,7 +14,7 @@ export const RecordList = ({ data }) => (
   </ListGroup>
 );
 
-export const Record = ({ record }) => (
+export const Record = ({ record, onDelete }) => (
   <span key={record.time}>
     <Badge variant="secondary">{record.id || ""}</Badge>
     <RecordDate date={new Date(record.time)} />{" "}
@@ -19,6 +25,9 @@ export const Record = ({ record }) => (
     >
       <span>...</span>
     </OverlayTrigger>
+    <Button variant="danger" onClick={() => onDelete(record.id)}>
+      x
+    </Button>
   </span>
 );
 

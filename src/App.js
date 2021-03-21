@@ -41,7 +41,12 @@ export default function App() {
     console.log(items);
   }, [data]);
 
-  const myMapFn = (item) => <Record record={item} />;
+  const deleteItem = (id) => {
+    console.log(`Deleting id ${id}.`);
+    setItems(items.filter((item) => item.id !== id));
+  };
+
+  const myMapFn = (item) => <Record record={item} onDelete={deleteItem} />;
 
   return (
     <div className="App">
