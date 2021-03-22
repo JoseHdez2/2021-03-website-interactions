@@ -12,11 +12,11 @@ export const Record = ({ record, onDelete }) => (
     key={record.time}
     style={{
       display: "grid",
-      gridTemplateColumns: "5% 15% 25% 45% 10%",
+      gridTemplateColumns: "3rem 5rem 6rem auto 3rem",
       columnGap: "2px"
     }}
   >
-    <Badge>{record.id || ""}</Badge>
+    <Badge>☰ {record.id}</Badge>
     <RecordDate date={new Date(record.time)} />
     <strong>{record.event.type}</strong>
     <RecordSetup setup={record.setup} />
@@ -46,7 +46,7 @@ export const RecordDate = ({ date }) => (
 
 export const RecordSetup = ({ setup }) => {
   const target = setup.url || setup.value || setup.altSelector;
-  const targetShort = limitStr(target, 28);
+  const targetShort = target; // limitStr(target, 28);
   if (target.length)
     return (
       <OverlayTrigger
@@ -54,7 +54,10 @@ export const RecordSetup = ({ setup }) => {
         placement="left"
         overlay={<Popover id={`tooltip`}>{target}</Popover>}
       >
-        <Badge variant={setup.value ? "success" : "secondary"}>
+        <Badge
+          variant={setup.value ? "success" : "secondary"}
+          style={{ overflow: "hidden" }}
+        >
           {targetShort}
         </Badge>
       </OverlayTrigger>
