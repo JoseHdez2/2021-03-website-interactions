@@ -1,7 +1,7 @@
 import "./styles.css";
 import { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
-import { Record, RecordList } from "./components/Record";
+import { Card } from "react-bootstrap";
+import { Record } from "./components/Record";
 import { DNDList } from "./components/DNDList.js";
 import { SaveJsonButton } from "./components/SaveJsonButton";
 import { StatsDiv } from "./components/StatsDiv";
@@ -20,7 +20,7 @@ export default function App() {
     async function loadDataAsync() {
       try {
         let data = await loadData();
-        // console.log(data);
+        console.log(data);
         setData(data);
       } catch (e) {
         console.warn(e);
@@ -38,7 +38,6 @@ export default function App() {
         (item, ind) => new Object({ ...item, id: ind.toString() })
       )
     );
-    console.log(items);
   }, [data]);
 
   const deleteItem = (id) => {
@@ -49,11 +48,24 @@ export default function App() {
   const myMapFn = (item) => <Record record={item} onDelete={deleteItem} />;
 
   return (
-    <div className="App">
+    <div className="App" style={{ margin: "1rem auto" }}>
       <h2>Website Interactions</h2>
-      <DNDList items={items || []} setItems={setItems} mapFunction={myMapFn} />
-      <StatsDiv />
-      <SaveJsonButton json={items} />
+      <Card
+        style={{
+          overflowY: "scroll",
+          height: "30rem",
+          width: "80%",
+          margin: "auto"
+        }}
+      >
+        <DNDList
+          items={items || []}
+          setItems={setItems}
+          mapFunction={myMapFn}
+        />
+      </Card>
+      <SaveJsonButton json={items} filename="interactions" />
+      <StatsDiv data={items} />
     </div>
   );
 }
