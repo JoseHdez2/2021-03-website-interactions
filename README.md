@@ -12,8 +12,8 @@ Single-page webapp that fetches a JSON with HTML event records and displays them
 ### Usage
 
 ```
-git clone https://github.com/JoseHdez2/2020-03-website-interactions.git
-cd 2020-03-website-interactions.git
+git clone https://github.com/JoseHdez2/2021-03-website-interactions.git
+cd 2021-03-website-interactions.git
 npm install
 npm start
 ```
